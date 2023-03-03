@@ -21,6 +21,8 @@ const displayTools = tools => {
           <p class="card-text">2. ${tool.features[1]}</p>
           <p class="card-text">3. ${tool.features[2]}</p>
         </div>
+        <hr>
+        <h4>${tool.name}</h4>
       </div>
         `;
         console.log(tool)
