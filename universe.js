@@ -18,12 +18,10 @@ const displayTools = tools => {
     else{
         showAll.classList.add('d-none')
     }
+    console.log(showAll);
 
 
-document.getElementById('btn-show-all').addEventListener('click', function(){
-    loadTools();
-    
-})
+
 
     tools.forEach(tool => {
         const toolDiv = document.createElement('div');
@@ -45,11 +43,31 @@ document.getElementById('btn-show-all').addEventListener('click', function(){
         </div>
       </div>
         `;
-        console.log(tool)
+        // console.log(tool)
         toolsContainer.appendChild(toolDiv);
-
-
     })
+    // stop loader / spinner
+    toggleSpinner(false)
 }
+
+// handle show more button click
+const showAllButton = document.getElementById('btn-show-all').addEventListener('click', function(){
+// start loader / spinner
+toggleSpinner(true);
+
+    loadTools();
+
+})
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none');
+    }
+    else{
+        loaderSection.classList.add('d-none')
+    }
+
+}
+
 
 loadTools();
