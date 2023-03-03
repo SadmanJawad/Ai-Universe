@@ -1,4 +1,4 @@
-const loadTools = async() => {
+const loadTools = async () => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const res = await fetch(url);
     const data = await res.json();
@@ -9,9 +9,25 @@ const loadTools = async() => {
 const displayTools = tools => {
     // console.log(tools)
     const toolsContainer = document.getElementById('tools-container');
-     tools.forEach(tool => {
-         const toolDiv = document.createElement('div');
-         toolDiv.classList.add('col');
+    // display 6  tool card only
+    const showAll = document.getElementById('show-all');
+    if(tools.length > 6){
+        tools = tools.slice(0,6);
+        showAll.classList.remove('d-none');
+    }
+    else{
+        showAll.classList.add('d-none')
+    }
+
+
+document.getElementById('btn-show-all').addEventListener('click', function(){
+    loadTools();
+    
+})
+
+    tools.forEach(tool => {
+        const toolDiv = document.createElement('div');
+        toolDiv.classList.add('col');
         toolDiv.innerHTML = `
         <div class="card my-3">
         <img src="${tool.image}" class="card-img-top" alt="...">
@@ -23,13 +39,17 @@ const displayTools = tools => {
         </div>
         <hr>
         <h4>${tool.name}</h4>
+        <div class="d-flex justify-content-between px-2">
+        <p><i class="fa-regular fa-calendar"></i> ${tool.published_in}</p>
+        <button class="btn btn-outline-danger border-0"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
       </div>
         `;
         console.log(tool)
         toolsContainer.appendChild(toolDiv);
 
 
-     })
+    })
 }
 
 loadTools();
