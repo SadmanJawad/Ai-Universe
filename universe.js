@@ -1,4 +1,3 @@
-
 const loadTools = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const res = await fetch(url);
@@ -12,6 +11,7 @@ const displayTools = (tools, dataLimit) => {
     const toolsContainer = document.getElementById('tools-container');
     toolsContainer.innerHTML = '';
 
+ 
     // display 6  tool card only
     const showAll = document.getElementById('show-all');
     if (dataLimit && tools.length > 6) {
@@ -40,7 +40,9 @@ const displayTools = (tools, dataLimit) => {
         <div class="d-flex justify-content-between px-2">
         <p><i class="fa-regular fa-calendar"></i> ${tool.published_in}</p>
 
-        <button class="btn btn-outline-danger border-0"><i class="fa-solid fa-arrow-right"></i></button>
+    <button onclick="loadArrowDetails('${tool.id}')" class="btn btn-outline-danger border-0" data-bs-toggle="modal" data-bs-target="#arrowModal"><i class="fa-solid fa-arrow-right"></i></button>
+      
+    
         </div>
       </div>
         `;
@@ -48,6 +50,11 @@ const displayTools = (tools, dataLimit) => {
         toolsContainer.appendChild(toolDiv);
     });
     
+        // stop loader / spinner
+        toggleSpinner(false);
+
+    }
+
     // spinner or loader
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
@@ -60,16 +67,18 @@ const toggleSpinner = isLoading => {
 }
 
     // Add event listener to Sort by Date button (bonus)
-    //    
-    // 
-    // 
+// 
+// 
+// 
+        
+        
 
-    // stop loader / spinner
-    toggleSpinner(false)
-}
+
 
 // shortcut function
 const processSearch = (dataLimit) => {
+    
+    // start loader / spinner
     loadTools(dataLimit);
     toggleSpinner(true);
 }
@@ -77,9 +86,39 @@ const processSearch = (dataLimit) => {
 // handle see more button click
 document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
-    // start loader / spinner
     toggleSpinner(true);
 })
 
-
 processSearch(6);
+//todo see more function delete after execute function
+// const showAllBtn = isClicked => {
+//     const seeMoreSection = document.getElementById('show-all');
+//     if(isClicked) {
+//         seeMoreSection.classList.remove('hidden');
+//     }
+//     else{
+//         seeMoreSection.classList.add('hidden')
+//     }
+// }
+
+
+
+
+
+
+// modal section
+const loadArrowDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    displayArrowDetails(data.data);
+
+}
+
+const displayArrowDetails = data => {
+    console.log(data);
+    const modalTitle = document.getElementById('arrowModalLabel');
+    modalTitle.innerText = data.tool_name;
+    const modalBody = document.getElementById('modal-body');
+    
+}
