@@ -50,11 +50,43 @@ const displayTools = (tools, dataLimit) => {
         toolsContainer.appendChild(toolDiv);
     });
 
+    // Add event listener to Sort by Date button
+    const sortByDateBtn = document.getElementById('sort-by-date-btn');
+    sortByDateBtn.addEventListener('click', () => {
+      const sortedData = sortData(tools);
+      displayTools(sortedData, dataLimit);
+  
+      if (dataLimit && tools.length > 6) {
+  
+          tools = tools.slice(0, 6);
+          // showAll.classList.add('d-none');
+          showAll.classList.remove('d-none');
+      }
+      else if(dataLimit && tools.length===6) {
+          showAll.classList.remove('d-none');
+      }
+      else if(dataLimit && tools.length===12) {
+          showAll.classList.add('d-none');
+      }
+      else{
+          showAll.classList.add('d-none');
+      }
+    });
+
 
         // stop loader / spinner
         toggleSpinner(false);
 
     }
+
+      // sortdata from sortDataButton
+      const sortData = (tools) => {
+        // Sort data by published_in property
+        const sortedData = tools.sort((a, b) => new Date(b.published_in) - new Date(a.published_in));
+        return sortedData;
+      }
+
+
 
     // spinner or loader
 const toggleSpinner = isLoading => {
@@ -66,15 +98,11 @@ const toggleSpinner = isLoading => {
         loaderSection.classList.add('d-none');
     }
 }
+   
 
-    // Add event listener to Sort by Date button (bonus)
-// 
-// 
-// 
+
+
         
-        
-
-
 
 // shortcut function
 const processSearch = (dataLimit) => {
