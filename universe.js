@@ -167,15 +167,16 @@ const displayArrowDetails = data => {
     </div>
 </div>
 </div>
-<div>
 
+<div>
 <img width="100%" class="position-relative" src="${data.image_link[0]}" alt="">
+    
+
+<h2 class="text-center mt-4" ${data.input_output_examples !== null ? data.input_output_examples[0].input : 'No Input Text Available'}</h2>
+
+<p class="text-center fs-5">${data.input_output_examples !== null ? data.input_output_examples[0].output : 'No Output Text Available'}</p>
 
 <p class="btn btn-danger position-absolute top-0 end-0 mt-4 me-4" >${data.accuracy.score*100}% Accuracy</p>
-        
-<h4 class="text-center mt-4">${data.input_output_examples[0].input}</h4>
-
-<p class="text-center fs-5"> ${data.input_output_examples[0].output}</p>
 
 </div>
 
