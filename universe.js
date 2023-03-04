@@ -16,10 +16,10 @@ const displayTools = (tools, dataLimit) => {
     const showAll = document.getElementById('show-all');
     if (dataLimit && tools.length > 6) {
         tools = tools.slice(0, 6);
-        showAll.classList.remove('hidden');
+        showAll.classList.remove('d-none');
     }
     else {
-        showAll.classList.add('hidden');
+        showAll.classList.add('d-none');
     }
 
     // display data
@@ -40,7 +40,7 @@ const displayTools = (tools, dataLimit) => {
         <div class="d-flex justify-content-between px-2">
         <p><i class="fa-regular fa-calendar"></i> ${tool.published_in}</p>
 
-    <button onclick="loadArrowDetails('${tool.id}')" class="btn btn-outline-danger border-0" data-bs-toggle="modal" data-bs-target="#arrowModal"><i class="fa-solid fa-arrow-right"></i></button>
+<button onclick="loadArrowDetails('${tool.id}')" class="btn btn-outline-danger border-0" data-bs-toggle="modal" data-bs-target="#arrowModal"><i class="fa-solid fa-arrow-right"></i></button>
       
     
         </div>
@@ -49,7 +49,8 @@ const displayTools = (tools, dataLimit) => {
         // console.log(tool)
         toolsContainer.appendChild(toolDiv);
     });
-    
+
+
         // stop loader / spinner
         toggleSpinner(false);
 
@@ -59,10 +60,10 @@ const displayTools = (tools, dataLimit) => {
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if (isLoading) {
-        loaderSection.classList.remove('hidden');
+        loaderSection.classList.remove('d-none');
     }
     else {
-        loaderSection.classList.add('hidden');
+        loaderSection.classList.add('d-none');
     }
 }
 
@@ -83,28 +84,12 @@ const processSearch = (dataLimit) => {
     toggleSpinner(true);
 }
 
-// handle see more button click
-document.getElementById('btn-show-all').addEventListener('click', function () {
+// handle see more/show all button click
+document.getElementById('show-all').addEventListener('click', function () {
     processSearch();
     toggleSpinner(true);
+    
 })
-
-
-//todo see more function delete after execute function
-// const showAllBtn = isClicked => {
-//     const seeMoreSection = document.getElementById('show-all');
-//     if(isClicked) {
-//         seeMoreSection.classList.remove('hidden');
-//     }
-//     else{
-//         seeMoreSection.classList.add('hidden')
-//     }
-// }
-
-
-
-
-
 
 // modal section
 const loadArrowDetails = async id => {
@@ -116,75 +101,67 @@ const loadArrowDetails = async id => {
 }
 
 const displayArrowDetails = data => {
-    console.log(data);
+    // console.log(data);
     const modalTitle = document.getElementById('arrowModalLabel');
     modalTitle.innerText = data.tool_name;
 
     const modalBody = document.getElementById('modal-body');
  
     modalBody.innerHTML=`
-    <div class="d-flex  p-4 gap-4">
-    <div class="border border-danger rounded p-4">
-        <div>
-        <h4>${data.description}</h4>
-        </div>
-    <div class="d-flex justify-content-around mt-4">
-
+    <div class="d-flex p-5">
+    <div class="border border-danger rounded  w-75 container">
     <div>
-    <h6 class="fw-bold text-success">${data.pricing[0].price}<h6>
-    <h6 class="fw-bold text-success text-center">${data.pricing[0].plan}</h6>
-    </div>
+       <h4>${data.description}</h4>
+       <div class="d-flex p-1 justify-content-around align-items-center gap-10 text-center my-3 ">
 
-    <div>
-    <h6 class="fw-bold text-warning">${data.pricing[1].price}<h6>
-    <h6 class="fw-bold text-warning text-center">${data.pricing[1].plan}</h6>
-    </div>
+       <div class="text-success">${data.pricing !==null ? data.pricing[0].price : 'Free Of Cost'} <br>  ${data.pricing !==null?data.pricing[0].plan:'Basic'}</div>
+       
+       <div class="text-warning">${data.pricing !==null ? data.pricing[1].price : 'Free Of Cost'} <br>  ${data.pricing !==null?data.pricing[1].plan:'Pro'}</div>
+       
+       <div class="text-danger">${data.pricing !==null ? data.pricing[2].price : 'Free Of Cost'} <br>  ${data.pricing !==null?data.pricing[2].plan:'Enterprise'}</div>
+  
+   </div>
+       <div class="d-flex gap-2">
+       <div>
+             <h2>Features</h2>
+               <h6 class="mb-1">${data?.features[1].feature_name ? '&#9679 ' +data.features[1].feature_name : ""}</h6>
+               <h6>${data?.features[2].feature_name ? '&#9679 ' + data.features[2].feature_name : ""}</h6>
+               <h6>${data?.features[3].feature_name ? '&#9679 ' + data.features[3].feature_name : ""}</h6>
+           </div>
+           <div>
+               <h2>Integrations</h2>
+               <h6> &#9679 ${data.integrations === null||data.integrations[0] === undefined ?"No Data found"  :data.integrations[0]}</h6>
+               <h6> &#9679 ${data.integrations === null||data.integrations[1] === undefined ?"No Data found"  :data.integrations[1]}</h6>
+               <h6> &#9679  ${data.integrations === null||data.integrations[2] === undefined ?"No Data found"  :data.integrations[2]}</h6>
+       
+           </div>
+       </div>
+   </div>
+   </div>
 
-    <div>
-    <h6 class="fw-bold text-danger">${data.pricing[2].price}<h6>
-    <h6 class="fw-bold text-danger text-center">${data.pricing[2].plan}<h6>
-    </div>
 
-    </div>
 
-    <div class="d-flex mt-4">
-    <div>
-    <h3>Feature</h3>
-    <ul>
-    <li>${data.features[1].feature_name}</li>
-    <li>${data.features[2].feature_name}</li>
-    <li>${data.features[3].feature_name}</li>
-    </ul>  
-    
-    </div>
-    <div class="ms-4">
-    <h3>Integration</h3>
-    <ul>
-    <li>${data.integrations[0]}</li>
-    <li>${data.integrations[1]}</li>
-    <li>${data.integrations[2]}</li>
-    </ul>
-    </div>
-</div>
-</div>
-
-<div>
-<img width="100%" class="position-relative" src="${data.image_link[0]}" alt="">
-    
-
-<h2 class="text-center mt-4" ${data.input_output_examples !== null ? data.input_output_examples[0].input : 'No Input Text Available'}</h2>
-
-<p class="text-center fs-5">${data.input_output_examples !== null ? data.input_output_examples[0].output : 'No Output Text Available'}</p>
-
-<p class="btn btn-danger position-absolute top-0 end-0 mt-4 me-4" >${data.accuracy.score*100}% Accuracy</p>
+<div class="w-full text-center">
+   <div class="relative">
+       <img class=" w-75" src="${data.image_link[0]}" alt="">
+       <h2>${data.input_output_examples !== null ? data.input_output_examples[0].input : 'Can you give any example?'}</h2>
+       <p>${data.input_output_examples !== null ? data.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'}</p>
+       
+<div id="accuracy-div"
+   class="px-5 py-5 absolute"
+   style="${data.accuracy.score !== null ? '' : 'display: none;'}">
+   <p class="btn btn-danger position-absolute top-0 end-0 mt-4 me-4" >${data.accuracy.score*100}% Accuracy</p>
 
 </div>
 
-    </div> 
+</div>
 </div>
     `;
 
 }
+
+// <h4 class="text-center mt-4">${data.input_output_examples[0].input}</h4>
+// <p class="text-center fs-5"> ${data.input_output_examples[0].output}</p>
 
 
 processSearch(6);
