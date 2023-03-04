@@ -1,0 +1,59 @@
+<div class="d-flex  p-4 gap-4">
+    <div class="border border-danger rounded p-4">
+        <div>
+        <h4>${data.description}</h4>
+        </div>
+    <div class="d-flex justify-content-around mt-4">
+
+    <div>
+    <h6 class="fw-bold text-success">${data.pricing[0].price}<h6>
+    <h6 class="fw-bold text-success text-center">${data.pricing[0].plan}</h6>
+    </div>
+
+    <div>
+    <h6 class="fw-bold text-warning">${data.pricing[1].price}<h6>
+    <h6 class="fw-bold text-warning text-center">${data.pricing[1].plan}</h6>
+    </div>
+
+    <div>
+    <h6 class="fw-bold text-danger">${data.pricing[2].price}<h6>
+    <h6 class="fw-bold text-danger text-center">${data.pricing[2].plan}<h6>
+    </div>
+
+    </div>
+
+    <div class="d-flex mt-4">
+    <div>
+    <h3>Feature</h3>
+    <ul>
+    <li>${data.features[1].feature_name}</li>
+    <li>${data.features[2].feature_name}</li>
+    <li>${data.features[3].feature_name}</li>
+    </ul>  
+    
+    </div>
+    <div class="ms-4">
+    <h3>Integration</h3>
+    <ul>
+    <li>${data.integrations[0]}</li>
+    <li>${data.integrations[1]}</li>
+    <li>${data.integrations[2]}</li>
+    </ul>
+    </div>
+</div>
+</div>
+
+<div>
+
+<img width="100%" class="position-relative" src="${data.image_link[0]}" alt="">
+
+<p class="btn btn-danger position-absolute top-0 end-0 mt-4 me-4" >${data.accuracy.score*100}% Accuracy</p>
+        
+<h4 class="text-center mt-4">${data.input_output_examples[0].input}</h4>
+
+<p class="text-center fs-5"> ${data.input_output_examples[0].output}</p>
+
+</div>
+
+
+    </div> 
