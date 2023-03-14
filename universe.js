@@ -73,6 +73,7 @@ const displayTools = (tools, dataLimit) => {
 
 // sortdata from sortDataButton
 const sortData = (tools) => {
+    console.log("data tools" , tools)
     // Sort data by published_in property
     const sortedData = tools.sort((a, b) => new Date(b.published_in) - new Date(a.published_in));
     return sortedData;
